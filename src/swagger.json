@@ -79,9 +79,51 @@
             "description": "Usuario ja cadastrado"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not exist"
+          }
+        }
       }
     },
-    "users/{user_id}/admin": {
+    "/users/{user_id}/admin": {
       "patch": {
         "tags": [
           "User"
@@ -100,7 +142,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Created",
+            "description": "Sucess",
             "content": {
               "application/json": {
                 "schema": {
@@ -109,8 +151,42 @@
               }
             }
           },
-          "500": {
-            "description": "Category already exist"
+          "404": {
+            "description": "User not exist"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of pet to use",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not exist"
           }
         }
       }
