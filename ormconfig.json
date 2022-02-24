@@ -1,7 +1,7 @@
 {
   "type": "postgres",
   "host": "localhost",
-  "username": "cruser",
+  "username": "docker",
   "password": "admin",
   "database": "cruser",
   "port": 5432,

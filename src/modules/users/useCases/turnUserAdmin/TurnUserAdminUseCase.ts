@@ -1,4 +1,4 @@
-import { User } from "../../model/User";
+import { User } from "../../entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
