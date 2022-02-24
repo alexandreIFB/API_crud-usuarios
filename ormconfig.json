@@ -1,7 +1,8 @@
 {
   "type": "postgres",
   "host": "localhost",
-  "username": "",
-  "password": "",
-  "database": "cruser"
+  "username": "cruser",
+  "password": "admin",
+  "database": "cruser",
+  "port": 5432
 }

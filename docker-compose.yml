@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+  database_rentx:
+    image: postgres
+    container_name: database_cruser
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=cruser
+    volumes:
+      - pgdata:/data/postgres
   app:
     build: .
     container_name: cruser
@@ -8,3 +20,11 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/app
+    links:
+      - database_cruser
+    depends_on:
+      - database_cruser
+
+volumes:
+  pgdata:
+    driver: local
