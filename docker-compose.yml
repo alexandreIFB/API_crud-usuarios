@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  database_rentx:
+  database_cruser:
     image: postgres
     container_name: database_cruser
     restart: always
