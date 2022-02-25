@@ -6,11 +6,11 @@ class TurnUserAdminController {
   // eslint-disable-next-line prettier/prettier
   constructor(private turnUserAdminUseCase: TurnUserAdminUseCase) { }
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { user_id } = request.params;
 
     try {
-      const userUpdated = this.turnUserAdminUseCase.execute({ user_id });
+      const userUpdated = await this.turnUserAdminUseCase.execute({ user_id });
 
       return response.status(200).json(userUpdated);
     } catch (error) {

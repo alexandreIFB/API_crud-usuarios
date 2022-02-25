@@ -9,14 +9,16 @@ class ListAllUsersUseCase {
   // eslint-disable-next-line prettier/prettier
   constructor(private usersRepository: IUsersRepository) { }
 
-  execute({ user_id }: IRequest): User[] {
-    const userIsAdmin = this.usersRepository.findById(user_id).admin;
+  async execute({ user_id }: IRequest): Promise<User[]> {
+    const user = await this.usersRepository.findById(user_id);
+
+    const userIsAdmin = user.admin;
 
     if (!userIsAdmin) {
       throw new Error("User is not admin");
     }
 
-    const users = this.usersRepository.list();
+    const users = await this.usersRepository.list();
 
     return users;
   }

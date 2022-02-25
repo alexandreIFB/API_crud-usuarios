@@ -6,11 +6,11 @@ class ListAllUsersController {
   // eslint-disable-next-line prettier/prettier
   constructor(private listAllUsersUseCase: ListAllUsersUseCase) { }
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { user_id } = request.headers;
 
     try {
-      const users = this.listAllUsersUseCase.execute({ user_id } as {
+      const users = await this.listAllUsersUseCase.execute({ user_id } as {
         user_id: string;
       });
 

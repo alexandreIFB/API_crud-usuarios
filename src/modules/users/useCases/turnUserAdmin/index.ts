@@ -2,10 +2,12 @@ import { UsersRepository } from "../../repositories/implementations/UsersReposit
 import { TurnUserAdminController } from "./TurnUserAdminController";
 import { TurnUserAdminUseCase } from "./TurnUserAdminUseCase";
 
-const usersRepository = UsersRepository.getInstance();
-const turnUserAdminUseCase = new TurnUserAdminUseCase(usersRepository);
-const turnUserAdminController = new TurnUserAdminController(
-  turnUserAdminUseCase
-);
+export default (): TurnUserAdminController => {
+  const usersRepository = new UsersRepository();
+  const turnUserAdminUseCase = new TurnUserAdminUseCase(usersRepository);
+  const turnUserAdminController = new TurnUserAdminController(
+    turnUserAdminUseCase
+  );
 
-export { turnUserAdminController };
+  return turnUserAdminController;
+};
