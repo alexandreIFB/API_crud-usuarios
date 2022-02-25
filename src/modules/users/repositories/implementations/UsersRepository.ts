@@ -1,56 +1,46 @@
+import { getRepository, Repository } from "typeorm";
+
 import { User } from "../../entities/User";
 import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
 
 class UsersRepository implements IUsersRepository {
-  private users: User[];
+  private repository: Repository<User>;
 
-  private static INSTANCE: UsersRepository;
-
-  private constructor() {
-    this.users = [];
+  constructor() {
+    this.repository = getRepository(User);
   }
 
-  public static getInstance(): UsersRepository {
-    if (!UsersRepository.INSTANCE) {
-      UsersRepository.INSTANCE = new UsersRepository();
-    }
+  async create({ name, email }: ICreateUserDTO): Promise<User> {
+    const user = this.repository.create({ name, email });
 
-    return UsersRepository.INSTANCE;
-  }
-
-  create({ name, email }: ICreateUserDTO): User {
-    const user = new User();
-
-    Object.assign(user, {
-      name,
-      email,
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
-
-    this.users.push(user);
+    await this.repository.save(user);
 
     return user;
   }
 
-  findById(id: string): User | undefined {
-    return this.users.find((user) => user.id === id);
+  async findById(id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne({ id });
+    return user;
   }
 
-  findByEmail(email: string): User | undefined {
-    return this.users.find((user) => user.email === email);
+  async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.repository.findOne({ email });
+    return user;
   }
 
-  turnAdmin(receivedUser: User): User {
-    const index = this.users.findIndex((user) => user.id === receivedUser.id);
+  async turnAdmin(receivedUser: User): Promise<User> {
+    const user = await this.repository.findOne({ id: receivedUser.id });
 
-    this.users[index].admin = true;
+    user.admin = true;
 
-    return this.users[index];
+    await this.repository.save(user);
+
+    return user;
   }
 
-  list(): User[] {
-    return this.users;
+  async list(): Promise<User[]> {
+    const users = await this.repository.find();
+    return users;
   }
 }
 

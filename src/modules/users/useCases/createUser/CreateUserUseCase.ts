@@ -10,18 +10,20 @@ class CreateUserUseCase {
   // eslint-disable-next-line prettier/prettier
   constructor(private usersRepository: IUsersRepository) { }
 
-  execute({ email, name }: IRequest): User {
+  async execute({ email, name }: IRequest): Promise<User> {
     if (!name || !email) {
       throw new Error("Invalid data");
     }
 
-    const userAlreadyExist = this.usersRepository.findByEmail(email);
+    const userAlreadyExist = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExist) {
       throw new Error("User Already Exist");
     }
 
-    return this.usersRepository.create({ name, email });
+    const user = this.usersRepository.create({ name, email });
+
+    return user;
   }
 }
 

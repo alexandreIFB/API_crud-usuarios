@@ -2,7 +2,7 @@ import { UsersRepository } from "../../repositories/implementations/UsersReposit
 import { CreateUserController } from "./CreateUserController";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
-const usersRepository = UsersRepository.getInstance();
+const usersRepository = new UsersRepository();
 const createUserUseCase = new CreateUserUseCase(usersRepository);
 const createUserController = new CreateUserController(createUserUseCase);
 

@@ -6,13 +6,13 @@ class CreateUserController {
   // eslint-disable-next-line prettier/prettier
   constructor(private createUserUseCase: CreateUserUseCase) { }
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { email, name } = request.body;
 
     try {
-      return response
-        .status(201)
-        .json(this.createUserUseCase.execute({ email, name }));
+      const user = await this.createUserUseCase.execute({ email, name });
+
+      return response.status(201).json(user);
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
