@@ -1,5 +1,5 @@
 import { UsersRepository } from "../../../modules/users/repositories/implementations/UsersRepository";
-import { CreateUserUseCase } from "../../../modules/users/useCases/createUser/CreateUserUseCase";
+import { CreateUserUseCase } from "../../../modules/users/useCases/User/createUser/CreateUserUseCase";
 
 describe("CreateUserUseCase", () => {
   let createUserUseCase: CreateUserUseCase;

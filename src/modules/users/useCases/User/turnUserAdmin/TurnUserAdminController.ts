@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { TurnUserAdminUseCase } from "./TurnUserAdminUseCase";
 
 class TurnUserAdminController {
-  // eslint-disable-next-line prettier/prettier
   constructor(private turnUserAdminUseCase: TurnUserAdminUseCase) { }
 
   async handle(request: Request, response: Response): Promise<Response> {
