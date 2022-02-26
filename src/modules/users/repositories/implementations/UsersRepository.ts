@@ -1,8 +1,10 @@
+import { singleton } from "tsyringe";
 import { getRepository, Repository } from "typeorm";
 
 import { User } from "../../entities/User";
 import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
 
+@singleton()
 class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
 

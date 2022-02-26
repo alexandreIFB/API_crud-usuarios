@@ -1,15 +1,17 @@
 import { User } from "modules/users/entities/User";
-import { IUsersRepository } from "modules/users/repositories/IUsersRepository";
+import { UsersRepository } from "../../../repositories/implementations/UsersRepository";
+import { IUsersRepository } from "../../../repositories/IUsersRepository";
+import { container } from "tsyringe";
 
 interface IRequest {
   user_id: string;
 }
 
 class ListAllUsersUseCase {
-  constructor(private usersRepository: IUsersRepository) { }
-
   async execute({ user_id }: IRequest): Promise<User[]> {
-    const user = await this.usersRepository.findById(user_id);
+    const usersRepository: IUsersRepository = container.resolve(UsersRepository)
+
+    const user = await usersRepository.findById(user_id);
 
     const userIsAdmin = user.admin;
 
@@ -17,7 +19,7 @@ class ListAllUsersUseCase {
       throw new Error("User is not admin");
     }
 
-    const users = await this.usersRepository.list();
+    const users = await usersRepository.list();
 
     return users;
   }
